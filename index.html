@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Md. Abu Sayed — CSE Researcher & Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   CSS CUSTOM PROPERTIES — DUAL THEME
+═══════════════════════════════════════════════ */
+:root {
+  --ink: #0d0f14;
+  --paper: #f5f2ec;
+  --cream: #ede9df;
+  --gold: #c8922a;
+  --gold-light: #e8b84b;
+  --teal: #1a6b6b;
+  --teal-light: #2a9d8f;
+  --teal-glow: rgba(26,107,107,0.18);
+  --muted: #6b6560;
+  --rule: rgba(13,15,20,0.12);
+  --shadow-sm: 0 2px 12px rgba(13,15,20,0.06);
+  --shadow-md: 0 8px 32px rgba(13,15,20,0.10);
+  --shadow-lg: 20px 20px 60px rgba(0,0,0,0.10), -4px -4px 20px rgba(255,255,255,0.7);
+  --nav-bg: rgba(245,242,236,0.92);
+  --card-bg: var(--paper);
+  --section-alt: var(--cream);
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+  --ink: #eee8dc;
+  --paper: #0f1117;
+  --cream: #161b22;
+  --gold: #e8b84b;
+  --gold-light: #f5ce6e;
+  --teal: #2fbfaf;
+  --teal-light: #3dd9c8;
+  --teal-glow: rgba(47,191,175,0.15);
+  --muted: #8b8580;
+  --rule: rgba(238,232,220,0.10);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.3);
+  --shadow-md: 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-lg: 20px 20px 60px rgba(0,0,0,0.4), -4px -4px 20px rgba(255,255,255,0.03);
+  --nav-bg: rgba(15,17,23,0.92);
+  --card-bg: #161b22;
+  --section-alt: #161b22;
+}
+
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SCROLL PROGRESS BAR ── */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; z-index: 200;
+  height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* ═══════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 4rem;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--rule);
+  transition: padding var(--transition), background var(--transition);
+}
+nav.scrolled { padding: 0.75rem 4rem; }
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.nav-logo span { color: var(--teal); }
+
+.nav-right { display: flex; align-items: center; gap: 2.5rem; }
+
+.nav-links {
+  display: flex; gap: 2.2rem;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.25s;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--teal);
+  transition: width 0.25s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--teal); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+/* Theme toggle */
+.theme-toggle {
+  width: 42px; height: 22px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 11px;
+  cursor: pointer;
+  position: relative;
+  transition: background var(--transition);
+  flex-shrink: 0;
+}
+.theme-toggle::after {
+  content: '';
+  position: absolute; top: 2px; left: 2px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--teal);
+  transition: transform var(--transition), background var(--transition);
+}
+[data-theme="dark"] .theme-toggle::after { transform: translateX(20px); background: var(--gold); }
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column; gap: 5px;
+  cursor: pointer; background: none; border: none; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--ink);
+  transition: all var(--transition);
+}
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile nav */
+.mobile-nav {
+  display: none;
+  position: fixed; top: 60px; left: 0; right: 0;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--rule);
+  z-index: 99;
+  padding: 1.5rem 2rem;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s;
+}
+.mobile-nav.open { transform: translateY(0); opacity: 1; }
+.mobile-nav a {
+  display: block;
+  padding: 0.75rem 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: color 0.2s, padding-left 0.2s;
+}
+.mobile-nav a:hover { color: var(--teal); padding-left: 0.5rem; }
+
+/* ═══════════════════════════════════════════════
+   PARTICLE CANVAS
+═══════════════════════════════════════════════ */
+#particle-canvas {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* ═══════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 0 4rem;
+  gap: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg-text {
+  position: absolute;
+  right: -2rem; bottom: -4rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22vw;
+  font-weight: 600;
+  color: rgba(13,15,20,0.03);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  transition: color var(--transition);
+}
+[data-theme="dark"] .hero-bg-text { color: rgba(238,232,220,0.03); }
+
+.hero-text { position: relative; z-index: 1; padding-top: 6rem; }
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block; width: 3rem; height: 1px;
+  background: var(--teal);
+}
+
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+.hero-name em { font-style: italic; color: var(--teal); }
+
+.hero-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Typewriter cursor */
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px; height: 1em;
+  background: var(--teal);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 440px;
+  margin-bottom: 3rem;
+}
+
+.hero-ctas { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 2.2rem;
+  background: var(--teal);
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--teal);
+  transition: background 0.25s, color 0.25s, transform 0.2s, box-shadow 0.2s;
+  position: relative; overflow: hidden;
+}
+.btn-primary::before {
+  content:'';
+  position:absolute;inset:0;
+  background: rgba(255,255,255,0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s;
+}
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,107,107,0.3); }
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 2.2rem;
+  background: transparent;
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  transition: background 0.25s, color 0.25s, transform 0.2s;
+}
+.btn-outline:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px); }
+
+/* Hero visual */
+.hero-visual {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding-top: 6rem;
+}
+
+.hero-card {
+  width: 340px;
+  background: var(--card-bg);
+  border: 1px solid var(--rule);
+  padding: 2.5rem;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+  transition: background var(--transition), box-shadow var(--transition);
+}
+.hero-card::before {
+  content: '';
+  position: absolute; top: -8px; left: -8px;
+  width: 100%; height: 100%;
+  border: 1px solid var(--gold);
+  z-index: -1;
+  transition: border-color var(--transition);
+}
+.hero-card:hover { transform: translateY(-4px); }
+
+.avatar-ring {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), var(--gold));
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  box-shadow: 0 0 0 4px var(--teal-glow);
+  transition: box-shadow var(--transition);
+  animation: pulse-ring 3s ease-in-out infinite;
+}
+@keyframes pulse-ring {
+  0%,100% { box-shadow: 0 0 0 4px var(--teal-glow); }
+  50% { box-shadow: 0 0 0 10px transparent; }
+}
+
+.card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.card-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--teal);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.card-detail {
+  display: flex; flex-direction: column; gap: 0.65rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.card-detail-row { display: flex; gap: 0.8rem; align-items: flex-start; }
+.card-detail-row .icon {
+  width: 16px; flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--teal);
+  font-size: 0.9rem;
+}
+
+/* Status badge */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0.3rem 0.8rem;
+  background: rgba(26,107,107,0.1);
+  border: 1px solid rgba(26,107,107,0.2);
+  border-radius: 2px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+/* ═══════════════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════════════ */
+section { padding: 6rem 4rem; position: relative; z-index: 1; }
+section.alt { background: var(--section-alt); }
+
+.section-header {
+  display: flex; align-items: baseline; gap: 2rem;
+  margin-bottom: 4rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.section-title em { font-style: italic; color: var(--teal); }
+
+/* ── STATS ── */
+.stats-section {
+  padding: 4rem;
+  background: var(--teal);
+  z-index: 1;
+  position: relative;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.stat-item {
+  background: transparent;
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  transition: transform 0.3s;
+}
+.stat-item:hover .stat-num { transform: scale(1.08); }
+.stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ── EDUCATION ── */
+.edu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.edu-card {
+  border: 1px solid var(--rule);
+  padding: 2rem;
+  background: var(--card-bg);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+.edu-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.edu-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: linear-gradient(to bottom, var(--teal), var(--gold));
+}
+.edu-level {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+.edu-degree {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.edu-field { font-size: 0.88rem; color: var(--teal); margin-bottom: 1.2rem; }
+.edu-detail { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+
+/* ── PUBLICATIONS ── */
+.pub-list { display: flex; flex-direction: column; gap: 1px; background: var(--rule); }
+.pub-item {
+  background: var(--card-bg);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.6rem 2rem;
+  transition: background 0.2s, transform 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+.pub-item:hover { background: var(--teal-glow); transform: translateX(4px); }
+.pub-year {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  min-width: 60px;
+}
+.pub-name { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 400; }
+.pub-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--teal);
+  color: var(--teal);
+  white-space: nowrap;
+}
+
+/* ── SKILLS with animated bars ── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.skill-group {
+  padding: 2rem;
+  border: 1px solid var(--rule);
+  background: var(--card-bg);
+  transition: background var(--transition), box-shadow var(--transition);
+}
+.skill-group:hover { box-shadow: var(--shadow-sm); }
+.skill-group-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Skill bar items */
+.skill-bar-item { margin-bottom: 1rem; }
+.skill-bar-label {
+  display: flex; justify-content: space-between;
+  font-size: 0.78rem;
+  font-family: 'DM Mono', monospace;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.04em;
+}
+.skill-bar-label span { color: var(--muted); font-size: 0.68rem; }
+.skill-bar-track {
+  height: 3px;
+  background: var(--rule);
+  position: relative;
+  overflow: hidden;
+}
+.skill-bar-fill {
+  position: absolute; top: 0; left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+}
+
+/* Tag style for tools */
+.skill-tag {
+  display: inline-block;
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  margin: 0.3rem 0.2rem;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+  cursor: default;
+}
+.skill-tag:hover {
+  background: var(--teal);
+  color: #fff;
+  border-color: var(--teal);
+  transform: translateY(-2px);
+}
+
+/* ── EXPERIENCE ── */
+.exp-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+.exp-card {
+  padding: 2rem;
+  border: 1px solid var(--rule);
+  background: var(--section-alt);
+  transition: transform var(--transition), box-shadow var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.exp-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+.exp-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.exp-card:hover::after { transform: scaleX(1); }
+.exp-icon {
+  width: 48px; height: 48px;
+  border: 1px solid var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  transition: background var(--transition);
+}
+.exp-card:hover .exp-icon { background: var(--teal-glow); }
+.exp-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
+.exp-sub { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.exp-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.75; }
+
+/* ── CERTIFICATIONS ── */
+.cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.cert-item {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  padding: 1.6rem 1.8rem;
+  border: 1px solid var(--rule);
+  background: var(--card-bg);
+  transition: border-color 0.2s, transform var(--transition), background var(--transition);
+}
+.cert-item:hover { border-color: var(--teal); transform: translateY(-2px); }
+.cert-cat { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.cert-name { font-size: 0.92rem; font-weight: 500; }
+.cert-platform { font-size: 0.78rem; color: var(--muted); }
+
+/* ── SOCIAL ── */
+.social-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.social-item {
+  display: flex; flex-direction: column; gap: 0.8rem;
+  padding: 2rem;
+  border: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+  background: var(--card-bg);
+  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s;
+  text-align: center;
+  align-items: center;
+}
+.social-item:hover { background: var(--teal); border-color: var(--teal); color: #fff; transform: translateY(-4px); }
+.social-icon { font-size: 1.6rem; transition: transform 0.3s; }
+.social-item:hover .social-icon { transform: scale(1.2); }
+.social-name { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.social-handle { font-size: 0.78rem; opacity: 0.7; }
+
+/* ── MORE GRID ── */
+.more-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.more-card { border: 1px solid var(--rule); overflow: hidden; background: var(--card-bg); transition: box-shadow var(--transition), background var(--transition); }
+.more-card:hover { box-shadow: var(--shadow-md); }
+.more-card-header { background: var(--teal); color: #fff; padding: 1.2rem 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.more-card-body { padding: 1.5rem; }
+.more-link { display: block; padding: 0.5rem 0; font-size: 0.85rem; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--rule); transition: color 0.2s, padding-left 0.2s; }
+.more-link:last-child { border-bottom: none; }
+.more-link:hover { color: var(--teal); padding-left: 0.5rem; }
+
+/* ── CONTACT ── */
+.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+.contact-info p { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 2.5rem; }
+.contact-detail { display: flex; flex-direction: column; gap: 1.2rem; }
+.contact-row { display: flex; gap: 1rem; align-items: flex-start; }
+.contact-row-icon { width: 36px; height: 36px; border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--teal); font-size: 0.9rem; transition: background var(--transition), border-color var(--transition); }
+.contact-row:hover .contact-row-icon { background: var(--teal-glow); border-color: var(--teal); }
+.contact-row-text { display: flex; flex-direction: column; font-size: 0.85rem; }
+.contact-row-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
+.contact-row-value { color: var(--ink); }
+.contact-form-side { display: flex; flex-direction: column; gap: 2rem; }
+.form-heading { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; }
+.form-heading em { font-style: italic; color: var(--teal); }
+.quick-links-heading { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; margin-top: 1.5rem; }
+.quick-links { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+.quick-link { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 1.2rem; border: 1px solid var(--rule); color: var(--muted); text-decoration: none; transition: all 0.2s; }
+.quick-link:hover { border-color: var(--teal); color: var(--teal); }
+
+/* ── TERMINAL ── */
+.terminal-block {
+  background: #0d1117;
+  border: 1px solid rgba(47,191,175,0.2);
+  border-radius: 4px;
+  padding: 1.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: #7ee787;
+  overflow: hidden;
+  position: relative;
+  margin-top: 2rem;
+}
+.terminal-block::before {
+  content: '●  ●  ●';
+  display: block;
+  color: rgba(255,255,255,0.2);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  margin-bottom: 1rem;
+}
+.terminal-prompt { color: #58a6ff; }
+.terminal-comment { color: #6e7681; }
+.terminal-string { color: #f38ba8; }
+.terminal-output { color: #adbac7; }
+.terminal-line { display: block; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  color: rgba(255,255,255,0.5);
+  padding: 3rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative; z-index: 1;
+  transition: background var(--transition);
+}
+.footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(255,255,255,0.9); font-weight: 600; }
+.footer-brand span { color: var(--gold-light); }
+.footer-copy { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.footer-socials { display: flex; gap: 1.2rem; }
+.footer-socials a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.8rem; font-family: 'DM Mono', monospace; letter-spacing: 0.08em; transition: color 0.2s; }
+.footer-socials a:hover { color: var(--gold-light); }
+
+/* Back to top */
+.back-to-top {
+  position: fixed; bottom: 2rem; right: 2rem;
+  width: 42px; height: 42px;
+  background: var(--teal);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  z-index: 99;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s, background 0.2s;
+  text-decoration: none;
+}
+.back-to-top.visible { opacity: 1; transform: translateY(0); }
+.back-to-top:hover { background: var(--teal-light); }
+
+/* ── SECTION DIVIDER ── */
+.section-divider {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.section-divider::after { content:''; flex:1; height:1px; background:var(--rule); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-text > * {
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards;
+}
+.hero-eyebrow  { animation-delay: 0.1s; }
+.hero-name     { animation-delay: 0.25s; }
+.hero-title    { animation-delay: 0.4s; }
+.hero-desc     { animation-delay: 0.55s; }
+.hero-ctas     { animation-delay: 0.7s; }
+.hero-visual   { opacity: 0; animation: fadeUp 0.7s ease 0.35s forwards; }
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.4,0,0.2,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  nav { padding: 1rem 2rem; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .mobile-nav { display: block; }
+  .hero { grid-template-columns: 1fr; padding: 0 2rem; gap: 0; }
+  .hero-visual { display: none; }
+  .hero-text { padding-top: 8rem; }
+  section { padding: 4rem 2rem; }
+  .stats-section { padding: 4rem 2rem; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .edu-grid, .exp-grid, .cert-grid, .social-grid, .more-grid { grid-template-columns: 1fr 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+  footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+}
+@media (max-width: 600px) {
+  .edu-grid, .exp-grid, .cert-grid, .social-grid, .more-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .pub-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  footer { padding: 2rem; }
+}
+
+/* ── TOOLTIP ── */
+[data-tooltip] { position: relative; }
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.6rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 50;
+}
+[data-tooltip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div id="scroll-progress"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#hero">Md. Abu <span>Sayed</span></a>
+  <div class="nav-right">
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#education">Education</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#more">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" data-tooltip="Toggle dark mode"></button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#education" class="mobile-link">Education</a>
+  <a href="#publications" class="mobile-link">Publications</a>
+  <a href="#skills" class="mobile-link">Skills</a>
+  <a href="#experience" class="mobile-link">Experience</a>
+  <a href="#certifications" class="mobile-link">Certifications</a>
+  <a href="#more" class="mobile-link">Gallery</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <canvas id="particle-canvas"></canvas>
+  <div class="hero-bg-text">CSE</div>
+
+  <div class="hero-text">
+    <p class="hero-eyebrow">Researcher · Engineer · Educator</p>
+    <h1 class="hero-name">Md. <em>Abu</em><br>Sayed</h1>
+    <p class="hero-title" id="typewriter-target">B.Sc in Computer Science &amp; Engineering &nbsp;·&nbsp; M.Sc (ongoing) &nbsp;·&nbsp; ML | Python | Research</p>
+    <p class="hero-desc">
+      A passionate CSE graduate exploring the frontiers of Machine Learning, data science, and software engineering. Committed to research, lifelong learning, and inspiring the next generation of technologists.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#publications">View Publications</a>
+      <a class="btn-outline" href="#contact">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="avatar-ring">AS</div>
+      <div class="card-name">Md. Abu Sayed</div>
+      <div class="card-sub">sayed4cse</div>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        Available for Collaboration
+      </div>
+      <div class="card-detail">
+        <div class="card-detail-row">
+          <span class="icon">📍</span>
+          <span>Hemayetpur, Savar, Dhaka, Bangladesh</span>
+        </div>
+        <div class="card-detail-row">
+          <span class="icon">✉️</span>
+          <span>sayed4cse@gmail.com</span>
+        </div>
+        <div class="card-detail-row">
+          <span class="icon">🎓</span>
+          <span>CSE — B.Sc &amp; M.Sc (ongoing)</span>
+        </div>
+        <div class="card-detail-row">
+          <span class="icon">🔬</span>
+          <span>ML · Python · Research</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num" data-target="7" data-suffix="+">0+</div>
+      <div class="stat-label">Projects (2023–2026)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="3" data-suffix="">0</div>
+      <div class="stat-label">Degrees Pursued</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="4" data-suffix="">0</div>
+      <div class="stat-label">CV Versions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Passion for Learning</div>
+    </div>
+  </div>
+</div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-num">01 —</span>
+    <h2 class="section-title">Education &amp; <em>Academic Journey</em></h2>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-level">Graduate · Ongoing</div>
+      <div class="edu-degree">M.Sc</div>
+      <div class="edu-field">Master of Science — Computer Science &amp; Engineering</div>
+      <div class="edu-detail">
+        Currently pursuing postgraduate studies, building deep expertise in advanced computing, algorithms, and research methodology.
+        <br><br>
+        <a href="https://sites.google.com/view/sayed4cse/certifications/studious/m-sc" style="color:var(--teal);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;">View Certificate →</a>
+      </div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-level">Undergraduate · Completed</div>
+      <div class="edu-degree">B.Sc</div>
+      <div class="edu-field">Bachelor of Science — Computer Science &amp; Engineering</div>
+      <div class="edu-detail">
+        Completed foundational and advanced coursework in CSE including data structures, algorithms, software engineering, and database systems.
+        <br><br>
+        <a href="https://sites.google.com/view/sayed4cse/educations/studying/b-sc/cse" style="color:var(--teal);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;">View Study Details →</a>
+        &nbsp;&nbsp;
+        <a href="https://sites.google.com/view/sayed4cse/certifications/studious/b-sc" style="color:var(--gold);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;">View Results →</a>
+      </div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-level">Diploma · Completed</div>
+      <div class="edu-degree">Dip.</div>
+      <div class="edu-field">Diploma in Engineering / Technical Education</div>
+      <div class="edu-detail">
+        Technical diploma providing a strong foundation in engineering principles and practical skills.
+        <br><br>
+        <a href="https://sites.google.com/view/sayed4cse/certifications/studious/dip" style="color:var(--teal);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;">View Certificate →</a>
+      </div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-level">Self-Directed Learning</div>
+      <div class="edu-degree">Skills</div>
+      <div class="edu-field">Python &amp; Machine Learning</div>
+      <div class="edu-detail">
+        Continuously advancing skills in Python programming and Machine Learning through structured self-study, online platforms, and hands-on projects.
+        <br><br>
+        <a href="https://sites.google.com/view/sayed4cse/educations/learning/python" style="color:var(--teal);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;">Python →</a>
+        &nbsp;&nbsp;
+        <a href="https://sites.google.com/view/sayed4cse/educations/learning/ml" style="color:var(--gold);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;">ML →</a>
+      </div>
+    </div>
+  </div>
+  <!-- Biography CVs -->
+  <div style="margin-top:2rem;" class="reveal">
+    <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Biography / CV Versions</div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="https://sites.google.com/view/sayed4cse/educations/biography/cv-1" class="btn-outline" style="font-size:0.7rem;padding:0.6rem 1.5rem;">CV — 1</a>
+      <a href="https://sites.google.com/view/sayed4cse/educations/biography/cv-2" class="btn-outline" style="font-size:0.7rem;padding:0.6rem 1.5rem;">CV — 2</a>
+      <a href="https://sites.google.com/view/sayed4cse/educations/biography/cv-3" class="btn-outline" style="font-size:0.7rem;padding:0.6rem 1.5rem;">CV — 3</a>
+      <a href="https://sites.google.com/view/sayed4cse/educations/biography/cv-4" class="btn-outline" style="font-size:0.7rem;padding:0.6rem 1.5rem;">CV — 4</a>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications" class="alt">
+  <div class="section-header reveal">
+    <span class="section-num">02 —</span>
+    <h2 class="section-title">Publications &amp; <em>Projects</em></h2>
+  </div>
+
+  <div class="section-divider reveal">◈ Articles</div>
+  <div class="pub-list reveal" style="margin-bottom:2.5rem;">
+    <div class="pub-item"><span class="pub-year">2026</span><span class="pub-name">Research Articles — In Progress</span><span class="pub-tag">Upcoming</span></div>
+    <div class="pub-item"><span class="pub-year">2025</span><span class="pub-name">Research Articles — 2025</span><span class="pub-tag">Published</span></div>
+    <div class="pub-item"><span class="pub-year">2024</span><span class="pub-name">Research Articles — 2024</span><span class="pub-tag">Published</span></div>
+    <div class="pub-item"><span class="pub-year">2023</span><span class="pub-name">Research Articles — 2023</span><span class="pub-tag">Published</span></div>
+  </div>
+
+  <div class="section-divider reveal">◈ Projects</div>
+  <div class="pub-list reveal" style="margin-bottom:2.5rem;">
+    <a class="pub-item" href="https://sites.google.com/view/sayed4cse/publications/projects/2026/ifc"><span class="pub-year">2026</span><span class="pub-name">IFC — Intelligent Feature Classification</span><span class="pub-tag">2026</span></a>
+    <a class="pub-item" href="https://sites.google.com/view/sayed4cse/publications/projects/2025/psm"><span class="pub-year">2025</span><span class="pub-name">PSM — Predictive System Modelling</span><span class="pub-tag">2025</span></a>
+    <a class="pub-item" href="https://sites.google.com/view/sayed4cse/publications/projects/2025/tcs"><span class="pub-year">2025</span><span class="pub-name">TCS — Text Classification System</span><span class="pub-tag">2025</span></a>
+    <a class="pub-item" href="https://sites.google.com/view/sayed4cse/publications/projects/2025/alg"><span class="pub-year">2025</span><span class="pub-name">ALG — Algorithm Research</span><span class="pub-tag">2025</span></a>
+    <a class="pub-item" href="https://sites.google.com/view/sayed4cse/publications/projects/2025/acd"><span class="pub-year">2025</span><span class="pub-name">ACD — Academic Dataset Analysis</span><span class="pub-tag">2025</span></a>
+    <a class="pub-item" href="https://sites.google.com/view/sayed4cse/publications/projects/2025/anl"><span class="pub-year">2025</span><span class="pub-name">ANL — Analytical Learning Model</span><span class="pub-tag">2025</span></a>
+    <a class="pub-item" href="https://sites.google.com/view/sayed4cse/publications/projects/2024/anls"><span class="pub-year">2024</span><span class="pub-name">ANLS — Advanced Natural Language System</span><span class="pub-tag">2024</span></a>
+    <div class="pub-item"><span class="pub-year">2023</span><span class="pub-name">Projects — 2023</span><span class="pub-tag">Archive</span></div>
+  </div>
+
+  <div class="section-divider reveal">◈ Thesis</div>
+  <div class="pub-list reveal">
+    <a class="pub-item" href="https://sites.google.com/view/sayed4cse/publications/projects/2026/ifc"><span class="pub-year">2026</span><span class="pub-name">IFC Thesis</span><span class="pub-tag">Thesis</span></a>
+    <a class="pub-item" href="https://sites.google.com/view/sayed4cse/publications/projects/2025/psm"><span class="pub-year">2025</span><span class="pub-name">PSUNO · TCS · ALG · ACD · ANL</span><span class="pub-tag">Thesis</span></a>
+    <a class="pub-item" href="https://sites.google.com/view/sayed4cse/publications/projects/2024/anls"><span class="pub-year">2024</span><span class="pub-name">ANLS Thesis</span><span class="pub-tag">Thesis</span></a>
+    <div class="pub-item"><span class="pub-year">2023</span><span class="pub-name">Thesis Work — 2023</span><span class="pub-tag">Archive</span></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">03 —</span>
+    <h2 class="section-title">Technical <em>Skills</em></h2>
+  </div>
+  <div class="skills-grid">
+    <!-- Programming skill bars -->
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Programming Languages</div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label">Python <span>95%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label">C / C++ <span>80%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label">Java <span>72%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="72"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label">SQL <span>78%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="78"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label">HTML / CSS / JS <span>75%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75"></div></div>
+      </div>
+    </div>
+    <!-- ML skill bars -->
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Machine Learning &amp; Data</div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label">Machine Learning <span>90%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label">Deep Learning <span>82%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="82"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label">Scikit-learn / Pandas <span>88%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="88"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label">TensorFlow <span>76%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="76"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label">NumPy / Matplotlib <span>85%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
+      </div>
+    </div>
+    <!-- Research tools -->
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Research &amp; Tools</div>
+      <span class="skill-tag" data-tooltip="Version Control">GitHub</span>
+      <span class="skill-tag" data-tooltip="Document Typesetting">LaTeX</span>
+      <span class="skill-tag" data-tooltip="Academic Publishing">ResearchGate</span>
+      <span class="skill-tag" data-tooltip="Academic Network">Academia.edu</span>
+      <span class="skill-tag" data-tooltip="Competitive Coding">HackerRank</span>
+      <span class="skill-tag" data-tooltip="ML Competitions">Kaggle</span>
+      <span class="skill-tag" data-tooltip="Academic Writing">Research Writing</span>
+      <div class="terminal-block" style="margin-top:1.5rem;">
+        <span class="terminal-line"><span class="terminal-prompt">>>> </span><span style="color:#e8b84b;">import</span> sayed4cse</span>
+        <span class="terminal-line"><span class="terminal-prompt">>>> </span>sayed4cse.status()</span>
+        <span class="terminal-line terminal-output">'Researcher | Engineer | Educator'</span>
+        <span class="terminal-line terminal-comment"># M.Sc ongoing · Python · ML</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="alt">
+  <div class="section-header reveal">
+    <span class="section-num">04 —</span>
+    <h2 class="section-title">Experiences &amp; <em>Activities</em></h2>
+  </div>
+  <div class="exp-grid">
+    <div class="exp-card reveal">
+      <div class="exp-icon">💼</div>
+      <div class="exp-title">Career</div>
+      <div class="exp-sub">HLSC · Professional Work</div>
+      <div class="exp-desc">
+        Professional career experience gained through working at HLSC. Building real-world skills in engineering, teamwork, and project delivery.
+      </div>
+      <br>
+      <a href="https://sites.google.com/view/sayed4cse/mores/gallery/works/hlsc" style="color:var(--teal);font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;">View Details →</a>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-icon">📝</div>
+      <div class="exp-title">Thesis Action</div>
+      <div class="exp-sub">Research · Academic</div>
+      <div class="exp-desc">
+        Active thesis research work spanning multiple projects from 2023 to 2026. Deep engagement with applied ML, data analysis, and algorithmic problem solving.
+      </div>
+      <br>
+      <a href="https://sites.google.com/view/sayed4cse/experiences/actions/thesis" style="color:var(--teal);font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;">View Thesis →</a>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-icon">🩸</div>
+      <div class="exp-title">Social Work</div>
+      <div class="exp-sub">Blood Donation · Community</div>
+      <div class="exp-desc">
+        Active participant in community social activities including blood donation drives, contributing positively to society beyond academic pursuits.
+      </div>
+      <br>
+      <a href="https://sites.google.com/view/sayed4cse/experiences/socials/blood" style="color:var(--teal);font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;">View Activity →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-header reveal">
+    <span class="section-num">05 —</span>
+    <h2 class="section-title">Certifications &amp; <em>Achievements</em></h2>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-item reveal">
+      <div class="cert-cat">Academic</div>
+      <div class="cert-name">M.Sc Certification</div>
+      <div class="cert-platform"><a href="https://sites.google.com/view/sayed4cse/certifications/studious/m-sc" style="color:var(--teal);">View →</a></div>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-cat">Academic</div>
+      <div class="cert-name">B.Sc Certification</div>
+      <div class="cert-platform"><a href="https://sites.google.com/view/sayed4cse/certifications/studious/b-sc" style="color:var(--teal);">View →</a></div>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-cat">Academic</div>
+      <div class="cert-name">Diploma Certification</div>
+      <div class="cert-platform"><a href="https://sites.google.com/view/sayed4cse/certifications/studious/dip" style="color:var(--teal);">View →</a></div>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-cat">Contest</div>
+      <div class="cert-name">Intra-Program Competition</div>
+      <div class="cert-platform"><a href="https://sites.google.com/view/sayed4cse/certifications/contests/programs/intra" style="color:var(--teal);">View →</a></div>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-cat">Online Course</div>
+      <div class="cert-name">Muktopaath Courses</div>
+      <div class="cert-platform"><a href="https://sites.google.com/view/sayed4cse/certifications/courses/online/muktopaath" style="color:var(--teal);">View →</a></div>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-cat">Online Course</div>
+      <div class="cert-name">Kaggle Courses</div>
+      <div class="cert-platform"><a href="https://sites.google.com/view/sayed4cse/certifications/courses/online/kaggle" style="color:var(--teal);">View →</a></div>
+    </div>
+    <div class="cert-item reveal" style="grid-column: span 3;">
+      <div class="cert-cat">Offline Course</div>
+      <div class="cert-name">Offline Training &amp; Workshops</div>
+      <div class="cert-platform"><a href="https://sites.google.com/view/sayed4cse/certifications/courses/offline/offline" style="color:var(--teal);">View Certificate →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROFILES -->
+<section class="alt">
+  <div class="section-header reveal">
+    <span class="section-num">06 —</span>
+    <h2 class="section-title">Academic &amp; <em>Social Profiles</em></h2>
+  </div>
+  <div class="social-grid">
+    <a class="social-item reveal" href="https://www.facebook.com/sayed4cse/" target="_blank">
+      <span class="social-icon">📘</span>
+      <span class="social-name">Facebook</span>
+      <span class="social-handle">@sayed4cse</span>
+    </a>
+    <a class="social-item reveal" href="https://www.linkedin.com/in/sayed4cse/" target="_blank">
+      <span class="social-icon">💼</span>
+      <span class="social-name">LinkedIn</span>
+      <span class="social-handle">in/sayed4cse</span>
+    </a>
+    <a class="social-item reveal" href="https://github.com/sayed4cse" target="_blank">
+      <span class="social-icon">🐙</span>
+      <span class="social-name">GitHub</span>
+      <span class="social-handle">sayed4cse</span>
+    </a>
+    <a class="social-item reveal" href="https://www.youtube.com/@sayed4cse" target="_blank">
+      <span class="social-icon">▶️</span>
+      <span class="social-name">YouTube</span>
+      <span class="social-handle">@sayed4cse</span>
+    </a>
+    <a class="social-item reveal" href="https://www.researchgate.net/profile/Md-Abu-Sayed-24" target="_blank">
+      <span class="social-icon">🔬</span>
+      <span class="social-name">ResearchGate</span>
+      <span class="social-handle">Md-Abu-Sayed-24</span>
+    </a>
+    <a class="social-item reveal" href="https://eub.academia.edu/sayed4cse" target="_blank">
+      <span class="social-icon">🎓</span>
+      <span class="social-name">Academia.edu</span>
+      <span class="social-handle">sayed4cse</span>
+    </a>
+    <a class="social-item reveal" href="https://www.hackerrank.com/profile/sayed4cse" target="_blank">
+      <span class="social-icon">⚡</span>
+      <span class="social-name">HackerRank</span>
+      <span class="social-handle">sayed4cse</span>
+    </a>
+    <a class="social-item reveal" href="https://www.kaggle.com/sayed4cse" target="_blank">
+      <span class="social-icon">📊</span>
+      <span class="social-name">Kaggle</span>
+      <span class="social-handle">sayed4cse</span>
+    </a>
+  </div>
+</section>
+
+<!-- MORE / GALLERY -->
+<section id="more">
+  <div class="section-header reveal">
+    <span class="section-num">07 —</span>
+    <h2 class="section-title">Gallery, Writing &amp; <em>More</em></h2>
+  </div>
+  <div class="more-grid">
+    <div class="more-card reveal">
+      <div class="more-card-header">📁 Gallery · Projects</div>
+      <div class="more-card-body">
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/publications/projects/2026/ifc">IFC — 2026</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/publications/projects/2025/psm">PSM — 2025</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/publications/projects/2025/tcs">TCS — 2025</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/projects/2025/alg">ALG — 2025</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/publications/projects/2025/acd">ACD — 2025</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/projects/2025/anl">ANL — 2025</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/projects/2024/ansl">ANSL — 2024</a>
+      </div>
+    </div>
+    <div class="more-card reveal">
+      <div class="more-card-header">✍️ Writing</div>
+      <div class="more-card-body">
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/writing/poems">Poems</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/writing/quotes">Quotes</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/writing/stories">Stories</a>
+      </div>
+    </div>
+    <div class="more-card reveal">
+      <div class="more-card-header">🎬 Videos</div>
+      <div class="more-card-body">
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/videos/projects">Project Videos</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/videos/learning">Learning Videos</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/videos/teaching">Teaching Videos</a>
+      </div>
+    </div>
+    <div class="more-card reveal">
+      <div class="more-card-header">👥 Friends · Gallery</div>
+      <div class="more-card-body">
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/friends/university">University Friends</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/friends/collage">College Friends</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/friends/school">School Friends</a>
+      </div>
+    </div>
+    <div class="more-card reveal">
+      <div class="more-card-header">🩸 Social Activities</div>
+      <div class="more-card-body">
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/experiences/socials/blood">Blood Donation Drive</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/certifications/contests/programs/intra">Contest Programs</a>
+      </div>
+    </div>
+    <div class="more-card reveal">
+      <div class="more-card-header">💼 Career · Works</div>
+      <div class="more-card-body">
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/works/hlsc">HLSC Work Gallery</a>
+        <a class="more-link" href="https://sites.google.com/view/sayed4cse/experiences/actions/thesis">Thesis Experience</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="alt">
+  <div class="section-header reveal">
+    <span class="section-num">08 —</span>
+    <h2 class="section-title">Get in <em>Touch</em></h2>
+  </div>
+  <div class="contact-layout">
+    <div class="contact-info reveal">
+      <p>
+        Whether you're interested in research collaboration, academic discussions, or simply want to connect — feel free to reach out. I am always open to new opportunities and conversations.
+      </p>
+      <div class="contact-detail">
+        <div class="contact-row">
+          <div class="contact-row-icon">📍</div>
+          <div class="contact-row-text">
+            <span class="contact-row-label">Address</span>
+            <span class="contact-row-value">Hemayetpur, Savar, Dhaka, Bangladesh</span>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">✉️</div>
+          <div class="contact-row-text">
+            <span class="contact-row-label">Personal Email</span>
+            <a class="contact-row-value" href="mailto:sayed4cse@gmail.com" style="color:var(--teal);text-decoration:none;">sayed4cse@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">🏫</div>
+          <div class="contact-row-text">
+            <span class="contact-row-label">Academic Email</span>
+            <a class="contact-row-value" href="mailto:sayed4cse@eub.edu.bd" style="color:var(--teal);text-decoration:none;">sayed4cse@eub.edu.bd</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-side reveal">
+      <div class="form-heading">Connect &amp; <em>Collaborate</em></div>
+      <div style="font-size:0.9rem;color:var(--muted);line-height:1.8;">
+        Find me across the web. I share research, projects, code, videos, and creative writing — all under the handle <strong style="color:var(--teal);">@sayed4cse</strong>.
+      </div>
+      <div>
+        <div class="quick-links-heading">Quick Navigation</div>
+        <div class="quick-links">
+          <a class="quick-link" href="https://sites.google.com/view/sayed4cse/certifications/studious/b-sc">Results</a>
+          <a class="quick-link" href="https://sites.google.com/view/sayed4cse/educations/studying/b-sc/cse">Study</a>
+          <a class="quick-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/works/hlsc">Work</a>
+          <a class="quick-link" href="https://sites.google.com/view/sayed4cse/mores/videos/teaching">Videos</a>
+          <a class="quick-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/friends/university">University</a>
+          <a class="quick-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/friends/collage">College</a>
+          <a class="quick-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/friends/school">School</a>
+          <a class="quick-link" href="https://sites.google.com/view/sayed4cse/mores/gallery/works/hlsc">Career</a>
+        </div>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;padding-top:1rem;border-top:1px solid var(--rule);">
+        <a class="btn-primary" href="mailto:sayed4cse@gmail.com">Send Email</a>
+        <a class="btn-outline" href="https://www.linkedin.com/in/sayed4cse/" target="_blank">LinkedIn Profile</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">Md. Abu <span>Sayed</span></div>
+    <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:rgba(255,255,255,0.35);letter-spacing:0.1em;margin-top:0.4rem;">Hemayetpur, Savar, Dhaka, Bangladesh</div>
+  </div>
+  <div class="footer-copy">© 2026 Md. Abu Sayed — All Rights Reserved</div>
+  <div class="footer-socials">
+    <a href="https://www.facebook.com/sayed4cse/" target="_blank">Facebook</a>
+    <a href="https://www.linkedin.com/in/sayed4cse/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/sayed4cse" target="_blank">GitHub</a>
+    <a href="https://www.youtube.com/@sayed4cse" target="_blank">YouTube</a>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<a href="#hero" class="back-to-top" id="back-to-top" aria-label="Back to top">↑</a>
+
+<!-- ═══════════════════════════════════════════
+   JAVASCRIPT — Advanced enhancements
+════════════════════════════════════════════ -->
+<script>
+/* ── 1. SCROLL PROGRESS ── */
+const progressBar = document.getElementById('scroll-progress');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (scrollTop / docHeight * 100) + '%';
+}
+
+/* ── 2. NAV SCROLL SHRINK ── */
+const nav = document.getElementById('nav');
+function handleNavScroll() {
+  nav.classList.toggle('scrolled', window.scrollY > 80);
+}
+
+/* ── 3. BACK TO TOP ── */
+const btt = document.getElementById('back-to-top');
+function handleBTT() {
+  btt.classList.toggle('visible', window.scrollY > 400);
+}
+
+/* ── 4. SCROLL SPY ── */
+const sections = document.querySelectorAll('section[id], div.stats-section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+function scrollSpy() {
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+
+window.addEventListener('scroll', () => {
+  updateProgress();
+  handleNavScroll();
+  handleBTT();
+  scrollSpy();
+}, { passive: true });
+
+/* ── 5. PARTICLE CANVAS ── */
+(function() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], animId;
+
+  function resize() {
+    const hero = document.querySelector('.hero');
+    W = canvas.width = hero.offsetWidth;
+    H = canvas.height = hero.offsetHeight;
+  }
+
+  function getColor() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    return isDark ? 'rgba(47,191,175,' : 'rgba(26,107,107,';
+  }
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.r = Math.random() * 1.8 + 0.4;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.alpha = Math.random() * 0.5 + 0.1;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = getColor() + this.alpha + ')';
+      ctx.fill();
+    }
+  }
+
+  function init() {
+    particles = Array.from({ length: 80 }, () => new Particle());
+  }
+
+  function drawLines() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 100) {
+          ctx.beginPath();
+          ctx.strokeStyle = getColor() + (0.12 * (1 - dist/100)) + ')';
+          ctx.lineWidth = 0.5;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawLines();
+    animId = requestAnimationFrame(animate);
+  }
+
+  resize();
+  init();
+  animate();
+  window.addEventListener('resize', () => { resize(); });
+})();
+
+/* ── 6. SCROLL REVEAL ── */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 60);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ── 7. SKILL BAR ANIMATION ── */
+const skillObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+        const w = bar.getAttribute('data-width');
+        setTimeout(() => bar.style.width = w + '%', 200);
+      });
+      skillObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.skill-group').forEach(g => skillObserver.observe(g));
+
+/* ── 8. COUNTER ANIMATION ── */
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('[data-target]').forEach(el => {
+        const target = +el.getAttribute('data-target');
+        const suffix = el.getAttribute('data-suffix') || '';
+        let current = 0;
+        const step = target / 40;
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = Math.floor(current) + suffix;
+          if (current >= target) clearInterval(timer);
+        }, 30);
+      });
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stats-grid').forEach(g => counterObserver.observe(g));
+
+/* ── 9. DARK / LIGHT MODE ── */
+const themeToggle = document.getElementById('theme-toggle');
+const html = document.documentElement;
+
+// Load saved preference
+const saved = localStorage.getItem('theme');
+if (saved) html.setAttribute('data-theme', saved);
+
+themeToggle.addEventListener('click', () => {
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+});
+
+/* ── 10. HAMBURGER MENU ── */
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+});
+
+// Close mobile nav on link click
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+  });
+});
+
+/* ── 11. SMOOTH NAV LINKS ── */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+/* ── 12. SECTION ALT BACKGROUNDS ── */
+// Alternate section backgrounds automatically
+document.querySelectorAll('section:not(.hero):not(.stats-section)').forEach((sec, i) => {
+  if (i % 2 === 1) sec.classList.add('alt');
+});
+</script>
+</body>
+</html>
